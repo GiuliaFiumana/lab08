@@ -1,11 +1,12 @@
 package it.unibo.deathnote.impl;
 
+import it.unibo.deathnote.api.DeathNote;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.deathnote.api.DeathNote;
-
 public class DeathNoteimpl implements DeathNote{
+
+    public static final Long TIME_TO_WRITE_CAUSE = 40L;
 
     final List<Person> personToKill = new ArrayList<>();
 
@@ -26,7 +27,7 @@ public class DeathNoteimpl implements DeathNote{
         }
 
     }
-    
+
     @Override
     public String getRule(int ruleNumber) throws IllegalArgumentException{
         if(ruleNumber < 1 || ruleNumber > RULES.size()){
@@ -42,6 +43,20 @@ public class DeathNoteimpl implements DeathNote{
             throw new java.lang.NullPointerException("The name is null");
         }
         personToKill.add(createPerson(name));
+    }
+
+    @Override
+    public boolean writeDeathCause(String cause) throws IllegalStateException{
+        if(cause == null || personToKill.isEmpty()){
+            throw new java.lang.IllegalStateException("cause null or no name in the DethNote");
+        }
+        long time = System.currentTimeMillis();
+        this.personToKill.get(personToKill.size() - 1).causeOfDeath = cause;
+        long time2 =System.currentTimeMillis();
+        if((time2 - time) > TIME_TO_WRITE_CAUSE){
+            this.personToKill.get(personToKill.size() - 1).causeOfDeath = "Heart attack";
+        }
+        return (time2 - time) < TIME_TO_WRITE_CAUSE;
     }
 
 
