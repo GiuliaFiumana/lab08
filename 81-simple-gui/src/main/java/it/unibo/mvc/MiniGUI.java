@@ -1,5 +1,6 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,21 +30,46 @@ public class MiniGUI {
      * Creates a new {@link MiniGUI}.
      */
     public MiniGUI() {
+        /*
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+
+        final JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+
         final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        innerPanel.add(write);
+
+        canvas.add(innerPanel, BorderLayout.CENTER);
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
+        
          * Handlers
          */
+        final JPanel canvas = new JPanel();
+    canvas.setLayout(new BorderLayout());
+
+    final JPanel buttonPanel = new JPanel();
+    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+
+    final JButton write = new JButton("Print a random number on standard output");
+    buttonPanel.add(write);  // ← Solo qui!
+
+    canvas.add(buttonPanel, BorderLayout.CENTER);
+
+    frame.setContentPane(canvas);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    write.addActionListener(e -> System.out.println(randomGenerator.nextInt()));
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 System.out.println(randomGenerator.nextInt());
             }
         });
+        
     }
 
     private void display() {
