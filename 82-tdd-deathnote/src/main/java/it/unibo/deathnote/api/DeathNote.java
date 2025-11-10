@@ -12,6 +12,7 @@ public interface DeathNote {
     /**
      * Returns the list of rules for this DeathNote.
      */
+    // vanno da 1 a 13
     List<String> RULES = List.of(
         """
         The human whose name is written in this note shall die.
