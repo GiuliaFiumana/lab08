@@ -1,7 +1,9 @@
-package it.unibo.deathnote.api;
+package it.unibo.deathnote.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteimpl implements DeathNote{
 
