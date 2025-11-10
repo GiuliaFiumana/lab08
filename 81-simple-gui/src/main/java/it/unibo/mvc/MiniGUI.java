@@ -46,19 +46,22 @@ public class MiniGUI {
 
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /* 
+
+        final JTextArea textArea = new JTextArea("Result");
+        canvas.add(textArea, BorderLayout.NORTH);
+        /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             @SuppressWarnings("PMD.SystemPrintln")
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
+                final int numero = randomGenerator.nextInt();
+                System.out.println(numero);
+                textArea.setText(String.valueOf(numero));
             }
         });
 
-        final JTextArea textArea = new JTextArea("Result");
-        canvas.add(textArea, BorderLayout.NORTH);
     }
 
     private void display() {
