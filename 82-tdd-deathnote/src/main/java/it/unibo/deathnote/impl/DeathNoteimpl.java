@@ -59,5 +59,19 @@ public class DeathNoteimpl implements DeathNote{
         return (time2 - time) < TIME_TO_WRITE_CAUSE;
     }
 
+    /**
+     * After writing the cause of death, details of the death should be written in the next
+     * 6 seconds and 40 milliseconds.
+     *
+     * @param details the details of the human's death
+     * @return true if the details were written within 6 seconds and 40 milliseconds, false otherwise
+     * @throws IllegalStateException if there is no name written in this DeathNote,
+     *     or the details are null
+     */
+    
+    @Override
+    public boolean writeDetails(String details){
+
+    }
 
 }
