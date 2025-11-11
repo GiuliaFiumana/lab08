@@ -1,12 +1,12 @@
-package it.unibo.deathnote.impl;
+package it.unibo.deathnote.api;
 
-import it.unibo.deathnote.api.DeathNote;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeathNoteimpl implements DeathNote{
 
     public static final Long TIME_TO_WRITE_CAUSE = 40L;
+    public static final Long TIME_TO_WRITE_DETAILS = 6040L;
 
     final List<Person> personToKill = new ArrayList<>();
 
@@ -59,19 +59,51 @@ public class DeathNoteimpl implements DeathNote{
         return (time2 - time) < TIME_TO_WRITE_CAUSE;
     }
 
-    /**
-     * After writing the cause of death, details of the death should be written in the next
-     * 6 seconds and 40 milliseconds.
-     *
-     * @param details the details of the human's death
-     * @return true if the details were written within 6 seconds and 40 milliseconds, false otherwise
-     * @throws IllegalStateException if there is no name written in this DeathNote,
-     *     or the details are null
-     */
-    
     @Override
     public boolean writeDetails(String details){
+        if(personToKill.isEmpty()){
+            throw new IllegalStateException("No name in the DeathNote");
+        }
+        long time = System.currentTimeMillis();
+        this.personToKill.get(personToKill.size() - 1).details = details;
+        long time2 = System.currentTimeMillis();
+        if((time2 - time) > TIME_TO_WRITE_DETAILS){
+            this.personToKill.get(personToKill.size() - 1).causeOfDeath = "";
+        }
+        return (time2 - time) < TIME_TO_WRITE_DETAILS;
+    }
 
+    @Override
+    public String getDeathCause(String name){
+        Person personToFind = findPerson(name);
+        return personToFind.causeOfDeath;
+        
+    }
+
+    @Override
+    public String getDeathDetails(String name){
+        Person personToFind = findPerson(name);
+        return personToFind.details;
+    }
+
+    private  Person findPerson(String name) throws IllegalArgumentException{
+        for(Person p : personToKill){
+            if(p.name.equals(name)){
+                return p;
+            }
+        }
+        throw new IllegalArgumentException("the provider name is not written in this DeathNote");
+
+    }
+    
+    @Override
+    public boolean isNameWritten(String name){
+        for(Person p : personToKill){
+            if(p.name.equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
